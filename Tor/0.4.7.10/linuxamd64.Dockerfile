@@ -43,8 +43,6 @@ RUN wget -qO gosu "https://github.com/tianon/gosu/releases/download/1.13/gosu-am
 
 FROM alpine:3.13
 
-ENV TOR_VERSION=0.4.7.8
-
 # Installing dependencies of Tor
 RUN apk --no-cache add --update \
       libevent \
