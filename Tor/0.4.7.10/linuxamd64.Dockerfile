@@ -56,8 +56,14 @@ RUN apk --no-cache add --update \
 COPY --from=tor-build "/tmp/bin" /usr/local/bin
 COPY --from=tor-build /usr/local/ /usr/local/
 
+ARG GROUP_ID=19001
+ARG USER_ID=19001
 ENV TOR_DATA /home/tor/.tor
-RUN chmod +x /usr/local/bin/gosu && addgroup -g 19001 -S tor && adduser -u 19001 -G tor -S tor && mkdir -p ${TOR_DATA} && chown -R tor:tor "$TOR_DATA"
+RUN chmod +x /usr/local/bin/gosu \
+      && addgroup -g ${GROUP_ID} -S tor \
+      && adduser -u ${USER_ID} -G tor -S tor \
+      && mkdir -p ${TOR_DATA} \
+      && chown -R tor:tor "$TOR_DATA"
 
 VOLUME /home/tor/.tor
 COPY docker-entrypoint.sh /entrypoint.sh
